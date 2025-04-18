@@ -8,6 +8,7 @@ import com.gamarena.GameArenaBackend.entity.dto.GameDTO;
 import com.gamarena.GameArenaBackend.repository.GameRepository;
 import com.gamarena.GameArenaBackend.repository.UserLikeRepository;
 import com.gamarena.GameArenaBackend.repository.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,7 +32,8 @@ public class GameService {
     }
 
 
-    public List<GameDTO> getGames(String username) {
+    public List<GameDTO> getGames() {
+        String username = getRequestUsername();
         List<Game> games = gameRepository.findAll();
         User user = userRepository.findByUsername(username).orElseThrow();
         List<UserLike> userLikes = userLikeRepository.findByUser(user);
@@ -58,5 +60,25 @@ public class GameService {
             result.add(userLike.getGame().getId());
         }
         return result;
+    }
+
+    public Boolean likeGame(String gameName) {
+        String username = getRequestUsername();
+        User user = userRepository.findByUsername(username).orElseThrow();
+        Game game = gameRepository.findByGameName(gameName).orElseThrow();
+        userLikeRepository.save(new UserLike(user, game));
+        return true;
+    }
+
+    public Boolean dislikeGame(String gameName) {
+        String username = getRequestUsername();
+        User user = userRepository.findByUsername(username).orElseThrow();
+        Game game = gameRepository.findByGameName(gameName).orElseThrow();
+        userLikeRepository.findByUserAndGame(user, game).ifPresent(userLikeRepository::delete);
+        return true;
+    }
+
+    private String getRequestUsername() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }

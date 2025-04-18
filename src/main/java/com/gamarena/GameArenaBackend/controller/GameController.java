@@ -4,10 +4,8 @@ import com.gamarena.GameArenaBackend.entity.dto.GameDTO;
 import com.gamarena.GameArenaBackend.service.GameService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 
@@ -24,7 +22,18 @@ public class GameController {
 
     @GetMapping("/all")
     public ResponseEntity<List<GameDTO>> getGames() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return ResponseEntity.ok(gameService.getGames(username));
+        return ResponseEntity.ok(gameService.getGames());
+    }
+
+    @PostMapping("/like")
+    public ResponseEntity<Boolean> likeGame(@RequestParam String gameName) {
+        System.out.println("like button pressed on game "+gameName);
+        return ResponseEntity.ok(gameService.likeGame(gameName));
+    }
+
+    @PostMapping("/dislike")
+    public ResponseEntity<Boolean> dislikeGame(@RequestParam String gameName) {
+        System.out.println("dislike button pressed on game "+gameName);
+        return ResponseEntity.ok(gameService.dislikeGame(gameName));
     }
 }
