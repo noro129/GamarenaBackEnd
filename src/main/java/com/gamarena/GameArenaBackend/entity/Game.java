@@ -29,4 +29,16 @@ public class Game {
     public int getGamePlayersNumber() {
         return gamePlayersNumber;
     }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
+    public void setGameLikesNumber(int gameLikesNumber) {
+        this.gameLikesNumber = gameLikesNumber;
+    }
+
+    public void setGamePlayersNumber(int gamePlayersNumber) {
+        this.gamePlayersNumber = gamePlayersNumber;
+    }
 }

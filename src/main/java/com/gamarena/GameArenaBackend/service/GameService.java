@@ -66,6 +66,8 @@ public class GameService {
         String username = getRequestUsername();
         User user = userRepository.findByUsername(username).orElseThrow();
         Game game = gameRepository.findByGameName(gameName).orElseThrow();
+        game.setGameLikesNumber(game.getGameLikesNumber()+1);
+        gameRepository.save(game);
         userLikeRepository.save(new UserLike(user, game));
         return true;
     }
@@ -74,6 +76,8 @@ public class GameService {
         String username = getRequestUsername();
         User user = userRepository.findByUsername(username).orElseThrow();
         Game game = gameRepository.findByGameName(gameName).orElseThrow();
+        game.setGameLikesNumber(game.getGameLikesNumber()-1);
+        gameRepository.save(game);
         userLikeRepository.findByUserAndGame(user, game).ifPresent(userLikeRepository::delete);
         return true;
     }
