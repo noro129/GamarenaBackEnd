@@ -1,0 +1,7 @@
+--INSERT INTO game (id, game_name, game_likes_number, game_players_number) VALUES
+--(1, 'Worduess', 124, 320),
+--(2, 'Sudoku', 210, 540),
+--(3, 'Twins-Hunt', 150, 410),
+--(4, '2048', 300, 700),
+--(5, 'Minesweeper', 180, 480),
+--(6, 'Snake', 270, 650);

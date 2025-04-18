@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("twins-hunt")
-@CrossOrigin("localhost:4200")
+@CrossOrigin("http://localhost:4200")
 public class TwinsHuntController {
     private final TwinsHuntService twinsHuntService;
 

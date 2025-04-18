@@ -9,7 +9,7 @@ public class SignUpRequest {
     private String email;
     private String username;
     private String password;
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
 
     public String getEmail() {
