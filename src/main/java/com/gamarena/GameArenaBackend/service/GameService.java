@@ -2,10 +2,12 @@ package com.gamarena.GameArenaBackend.service;
 
 
 import com.gamarena.GameArenaBackend.entity.Game;
+import com.gamarena.GameArenaBackend.entity.PlayRecord;
 import com.gamarena.GameArenaBackend.entity.User;
 import com.gamarena.GameArenaBackend.entity.UserLike;
 import com.gamarena.GameArenaBackend.entity.dto.GameDTO;
 import com.gamarena.GameArenaBackend.repository.GameRepository;
+import com.gamarena.GameArenaBackend.repository.PlayRecordRepository;
 import com.gamarena.GameArenaBackend.repository.UserLikeRepository;
 import com.gamarena.GameArenaBackend.repository.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class GameService {
@@ -22,13 +25,16 @@ public class GameService {
     private final GameRepository gameRepository;
     private final UserLikeRepository userLikeRepository;
     private final UserRepository userRepository;
+    private final PlayRecordRepository playRecordRepository;
 
     public GameService(GameRepository gameRepository,
                        UserLikeRepository userLikeRepository,
-                       UserRepository userRepository) {
+                       UserRepository userRepository,
+                       PlayRecordRepository playRecordRepository) {
         this.gameRepository = gameRepository;
         this.userLikeRepository = userLikeRepository;
         this.userRepository = userRepository;
+        this.playRecordRepository = playRecordRepository;
     }
 
 
@@ -84,5 +90,19 @@ public class GameService {
 
     private String getRequestUsername() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
+    public Boolean startGame(String gameName) {
+        String username = getRequestUsername();
+        User user = userRepository.findByUsername(username).orElseThrow();
+        Game game = gameRepository.findByGameName(gameName).orElseThrow();
+        playRecordRepository.findByUserAndGame(user, game).ifPresentOrElse(
+                null,
+                ()->{
+            game.setGamePlayersNumber(game.getGamePlayersNumber()+1);
+            gameRepository.save(game);
+            playRecordRepository.save(new PlayRecord(user, game));
+        });
+        return true;
     }
 }

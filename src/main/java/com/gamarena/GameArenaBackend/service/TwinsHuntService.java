@@ -8,7 +8,7 @@ import java.util.*;
 public class TwinsHuntService {
     private final String[] COLORS = {
                                         "#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF",
-                                        "#FF8000", "#8000FF", "#FFFFFF", "#00FF80", "#FF0080", "#808080",
+                                        "#FF8000", "#8000FF", "#307473", "#00FF80", "#FF0080", "#808080",
                                         "#804000", "#FF8080", "#FFFF80", "#80FF80", "#8080FF", "#000000",
                                     };
 

@@ -3,7 +3,6 @@ package com.gamarena.GameArenaBackend.controller;
 import com.gamarena.GameArenaBackend.entity.dto.GameDTO;
 import com.gamarena.GameArenaBackend.service.GameService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +22,11 @@ public class GameController {
     @GetMapping("/all")
     public ResponseEntity<List<GameDTO>> getGames() {
         return ResponseEntity.ok(gameService.getGames());
+    }
+
+    @PostMapping("/start")
+    public ResponseEntity<Boolean> startGame(@RequestParam String gameName) {
+        return ResponseEntity.ok(gameService.startGame(gameName));
     }
 
     @PostMapping("/like")

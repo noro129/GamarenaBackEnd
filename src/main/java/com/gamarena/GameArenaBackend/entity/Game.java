@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.util.Objects;
+
 @Entity
 public class Game {
     @Id
@@ -40,5 +42,17 @@ public class Game {
 
     public void setGamePlayersNumber(int gamePlayersNumber) {
         this.gamePlayersNumber = gamePlayersNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Game game)) return false;
+        return gameLikesNumber == game.gameLikesNumber && gamePlayersNumber == game.gamePlayersNumber && Objects.equals(gameName.toLowerCase(), game.gameName.toLowerCase());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(gameName, gameLikesNumber, gamePlayersNumber);
     }
 }
