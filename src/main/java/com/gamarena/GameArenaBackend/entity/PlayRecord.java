@@ -17,6 +17,8 @@ public class PlayRecord {
     @JoinColumn(name = "game_id", referencedColumnName = "id")
     private Game game;
 
+    public PlayRecord() {}
+
     public PlayRecord(User user, Game game) {
         this.user = user;
         this.game = game;

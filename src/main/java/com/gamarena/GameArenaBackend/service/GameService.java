@@ -97,7 +97,7 @@ public class GameService {
         User user = userRepository.findByUsername(username).orElseThrow();
         Game game = gameRepository.findByGameName(gameName).orElseThrow();
         playRecordRepository.findByUserAndGame(user, game).ifPresentOrElse(
-                null,
+                object -> {},
                 ()->{
             game.setGamePlayersNumber(game.getGamePlayersNumber()+1);
             gameRepository.save(game);
