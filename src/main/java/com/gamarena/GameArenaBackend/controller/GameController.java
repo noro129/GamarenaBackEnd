@@ -2,6 +2,7 @@ package com.gamarena.GameArenaBackend.controller;
 
 import com.gamarena.GameArenaBackend.controller.request.GameResultRequest;
 import com.gamarena.GameArenaBackend.entity.dto.GameDTO;
+import com.gamarena.GameArenaBackend.entity.dto.GameStatsBoardDTO;
 import com.gamarena.GameArenaBackend.service.GameService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,5 +45,10 @@ public class GameController {
     public  ResponseEntity<Boolean> setGameResult(@RequestBody GameResultRequest gameResult) {
         System.out.println(gameResult.getGameName()+" "+gameResult.isGameWon());
         return ResponseEntity.ok(gameService.setGameResult(gameResult));
+    }
+
+    @GetMapping("/stats")
+    public ResponseEntity<List<GameStatsBoardDTO>> getGameStats(@RequestParam String gameName){
+        return ResponseEntity.ok(gameService.getGameStats(gameName));
     }
 }

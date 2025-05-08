@@ -4,6 +4,7 @@ package com.gamarena.GameArenaBackend.service;
 import com.gamarena.GameArenaBackend.controller.request.GameResultRequest;
 import com.gamarena.GameArenaBackend.entity.*;
 import com.gamarena.GameArenaBackend.entity.dto.GameDTO;
+import com.gamarena.GameArenaBackend.entity.dto.GameStatsBoardDTO;
 import com.gamarena.GameArenaBackend.entity.enums.GameResultEnum;
 import com.gamarena.GameArenaBackend.repository.*;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -112,5 +113,10 @@ public class GameService {
         int seconds = gameResult.isGameWon() ? gameResult.getSeconds() : 0;
         gameResultRepository.save(new GameResult(game, user, result, minutes, seconds));
         return true;
+    }
+
+    public List<GameStatsBoardDTO> getGameStats(String gameName) {
+        Game game = gameRepository.findByGameName(gameName).orElseThrow();
+        return gameResultRepository.getGameStats(game);
     }
 }
