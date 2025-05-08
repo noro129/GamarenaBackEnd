@@ -1,5 +1,6 @@
 package com.gamarena.GameArenaBackend.controller;
 
+import com.gamarena.GameArenaBackend.controller.request.GameResultRequest;
 import com.gamarena.GameArenaBackend.entity.dto.GameDTO;
 import com.gamarena.GameArenaBackend.service.GameService;
 import org.springframework.http.ResponseEntity;
@@ -31,13 +32,17 @@ public class GameController {
 
     @PostMapping("/like")
     public ResponseEntity<Boolean> likeGame(@RequestParam String gameName) {
-        System.out.println("like button pressed on game "+gameName);
         return ResponseEntity.ok(gameService.likeGame(gameName));
     }
 
     @PostMapping("/dislike")
     public ResponseEntity<Boolean> dislikeGame(@RequestParam String gameName) {
-        System.out.println("dislike button pressed on game "+gameName);
         return ResponseEntity.ok(gameService.dislikeGame(gameName));
+    }
+
+    @PostMapping("/set-result")
+    public  ResponseEntity<Boolean> setGameResult(@RequestBody GameResultRequest gameResult) {
+        System.out.println(gameResult.getGameName()+" "+gameResult.isGameWon());
+        return ResponseEntity.ok(gameService.setGameResult(gameResult));
     }
 }

@@ -1,15 +1,11 @@
 package com.gamarena.GameArenaBackend.service;
 
 
-import com.gamarena.GameArenaBackend.entity.Game;
-import com.gamarena.GameArenaBackend.entity.PlayRecord;
-import com.gamarena.GameArenaBackend.entity.User;
-import com.gamarena.GameArenaBackend.entity.UserLike;
+import com.gamarena.GameArenaBackend.controller.request.GameResultRequest;
+import com.gamarena.GameArenaBackend.entity.*;
 import com.gamarena.GameArenaBackend.entity.dto.GameDTO;
-import com.gamarena.GameArenaBackend.repository.GameRepository;
-import com.gamarena.GameArenaBackend.repository.PlayRecordRepository;
-import com.gamarena.GameArenaBackend.repository.UserLikeRepository;
-import com.gamarena.GameArenaBackend.repository.UserRepository;
+import com.gamarena.GameArenaBackend.entity.enums.GameResultEnum;
+import com.gamarena.GameArenaBackend.repository.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class GameService {
@@ -26,15 +21,17 @@ public class GameService {
     private final UserLikeRepository userLikeRepository;
     private final UserRepository userRepository;
     private final PlayRecordRepository playRecordRepository;
+    private final GameResultRepository gameResultRepository;
 
     public GameService(GameRepository gameRepository,
                        UserLikeRepository userLikeRepository,
                        UserRepository userRepository,
-                       PlayRecordRepository playRecordRepository) {
+                       PlayRecordRepository playRecordRepository, GameResultRepository gameResultRepository) {
         this.gameRepository = gameRepository;
         this.userLikeRepository = userLikeRepository;
         this.userRepository = userRepository;
         this.playRecordRepository = playRecordRepository;
+        this.gameResultRepository = gameResultRepository;
     }
 
 
@@ -103,6 +100,17 @@ public class GameService {
             gameRepository.save(game);
             playRecordRepository.save(new PlayRecord(user, game));
         });
+        return true;
+    }
+
+    public Boolean setGameResult(GameResultRequest gameResult) {
+        String username = getRequestUsername();
+        User user = userRepository.findByUsername(username).orElseThrow();
+        Game game = gameRepository.findByGameName(gameResult.getGameName()).orElseThrow();
+        GameResultEnum result = gameResult.isGameWon() ? GameResultEnum.WON : GameResultEnum.LOST;
+        int minutes = gameResult.isGameWon() ? gameResult.getMinutes() : 0;
+        int seconds = gameResult.isGameWon() ? gameResult.getSeconds() : 0;
+        gameResultRepository.save(new GameResult(game, user, result, minutes, seconds));
         return true;
     }
 }
