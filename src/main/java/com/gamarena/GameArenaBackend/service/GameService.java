@@ -5,6 +5,7 @@ import com.gamarena.GameArenaBackend.controller.request.GameResultRequest;
 import com.gamarena.GameArenaBackend.entity.*;
 import com.gamarena.GameArenaBackend.entity.dto.GameDTO;
 import com.gamarena.GameArenaBackend.entity.dto.GameStatsBoardDTO;
+import com.gamarena.GameArenaBackend.entity.dto.UserGameStatsDTO;
 import com.gamarena.GameArenaBackend.entity.enums.GameResultEnum;
 import com.gamarena.GameArenaBackend.repository.*;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -118,5 +119,12 @@ public class GameService {
     public List<GameStatsBoardDTO> getGameStatsByHints(String gameName, int hints) {
         Game game = gameRepository.findByGameName(gameName).orElseThrow();
         return gameResultRepository.getGameStatsByHints(game, hints);
+    }
+
+    public List<UserGameStatsDTO> getUserGameStats(String gameName) {
+        String username = getRequestUsername();
+        User user = userRepository.findByUsername(username).orElseThrow();
+        Game game = gameRepository.findByGameName(gameName).orElseThrow();
+        return gameResultRepository.getUserGameStats(game, user);
     }
 }

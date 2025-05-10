@@ -3,6 +3,7 @@ package com.gamarena.GameArenaBackend.controller;
 import com.gamarena.GameArenaBackend.controller.request.GameResultRequest;
 import com.gamarena.GameArenaBackend.entity.dto.GameDTO;
 import com.gamarena.GameArenaBackend.entity.dto.GameStatsBoardDTO;
+import com.gamarena.GameArenaBackend.entity.dto.UserGameStatsDTO;
 import com.gamarena.GameArenaBackend.service.GameService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,5 +52,10 @@ public class GameController {
     @GetMapping("/stats")
     public ResponseEntity<List<GameStatsBoardDTO>> getGameStatsByHints(@RequestParam String gameName, @RequestParam int hints){
         return ResponseEntity.ok(gameService.getGameStatsByHints(gameName, hints));
+    }
+
+    @GetMapping("/stats/user")
+    public ResponseEntity<List<UserGameStatsDTO>> getUserGameStats(@RequestParam String gameName){
+        return ResponseEntity.ok(gameService.getUserGameStats(gameName));
     }
 }
