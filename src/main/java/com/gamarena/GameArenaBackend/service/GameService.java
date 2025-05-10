@@ -111,12 +111,12 @@ public class GameService {
         GameResultEnum result = gameResult.isGameWon() ? GameResultEnum.WON : GameResultEnum.LOST;
         int minutes = gameResult.isGameWon() ? gameResult.getMinutes() : 0;
         int seconds = gameResult.isGameWon() ? gameResult.getSeconds() : 0;
-        gameResultRepository.save(new GameResult(game, user, result, minutes, seconds));
+        gameResultRepository.save(new GameResult(game, user, result, minutes, seconds, gameResult.getHints()));
         return true;
     }
 
-    public List<GameStatsBoardDTO> getGameStats(String gameName) {
+    public List<GameStatsBoardDTO> getGameStatsByHints(String gameName, int hints) {
         Game game = gameRepository.findByGameName(gameName).orElseThrow();
-        return gameResultRepository.getGameStats(game);
+        return gameResultRepository.getGameStatsByHints(game, hints);
     }
 }

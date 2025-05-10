@@ -28,6 +28,7 @@ public class GameController {
 
     @PostMapping("/start")
     public ResponseEntity<Boolean> startGame(@RequestParam String gameName) {
+        System.out.println(gameName);
         return ResponseEntity.ok(gameService.startGame(gameName));
     }
 
@@ -48,7 +49,7 @@ public class GameController {
     }
 
     @GetMapping("/stats")
-    public ResponseEntity<List<GameStatsBoardDTO>> getGameStats(@RequestParam String gameName){
-        return ResponseEntity.ok(gameService.getGameStats(gameName));
+    public ResponseEntity<List<GameStatsBoardDTO>> getGameStatsByHints(@RequestParam String gameName, @RequestParam int hints){
+        return ResponseEntity.ok(gameService.getGameStatsByHints(gameName, hints));
     }
 }

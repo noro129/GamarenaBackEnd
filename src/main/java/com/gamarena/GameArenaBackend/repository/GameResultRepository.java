@@ -13,6 +13,8 @@ public interface GameResultRepository extends JpaRepository<GameResult, Long> {
 
     @Query("select new com.gamarena.GameArenaBackend.entity.dto.GameStatsBoardDTO(gr.user.username, gr.minutes, gr.seconds) " +
             "from GameResult gr " +
-            "where gr.gameResult = com.gamarena.GameArenaBackend.entity.enums.GameResultEnum.WON AND gr.game=:game")
-    List<GameStatsBoardDTO> getGameStats(@Param("game") Game game);
+            "where gr.gameResult = com.gamarena.GameArenaBackend.entity.enums.GameResultEnum.WON AND gr.game=:game AND gr.hints=:hints " +
+            "ORDER BY gr.minutes, gr.seconds " +
+            "limit 10")
+    List<GameStatsBoardDTO> getGameStatsByHints(@Param("game") Game game, @Param("hints") int hints);
 }

@@ -5,6 +5,7 @@ public class GameResultRequest {
     private boolean gameWon;
     private int minutes;
     private int seconds;
+    private int hints;
 
     public String getGameName() {
         return gameName;
@@ -20,5 +21,9 @@ public class GameResultRequest {
 
     public int getSeconds() {
         return seconds;
+    }
+
+    public int getHints() {
+        return hints;
     }
 }

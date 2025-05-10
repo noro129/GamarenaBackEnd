@@ -18,16 +18,18 @@ public class GameResult {
     private GameResultEnum gameResult;
     private int minutes;
     private int seconds;
+    private int hints;
 
     public GameResult() {
     }
 
-    public GameResult(Game game, User user, GameResultEnum gameResult, int minutes, int seconds) {
+    public GameResult(Game game, User user, GameResultEnum gameResult, int minutes, int seconds, int hints) {
         this.game = game;
         this.user = user;
         this.gameResult = gameResult;
         this.minutes = minutes;
         this.seconds = seconds;
+        this.hints = hints;
     }
 
     public Game getGame() {
@@ -68,5 +70,13 @@ public class GameResult {
 
     public void setSeconds(int seconds) {
         this.seconds = seconds;
+    }
+
+    public int getHints() {
+        return hints;
+    }
+
+    public void setHints(int hints) {
+        this.hints = hints;
     }
 }
