@@ -4,6 +4,7 @@ package com.gamarena.GameArenaBackend.service;
 import com.gamarena.GameArenaBackend.controller.request.GameResultRequest;
 import com.gamarena.GameArenaBackend.entity.*;
 import com.gamarena.GameArenaBackend.entity.dto.GameDTO;
+import com.gamarena.GameArenaBackend.entity.dto.GameInstructionDTO;
 import com.gamarena.GameArenaBackend.entity.dto.GameStatsBoardDTO;
 import com.gamarena.GameArenaBackend.entity.dto.UserGameStatsDTO;
 import com.gamarena.GameArenaBackend.entity.enums.GameResultEnum;
@@ -24,16 +25,18 @@ public class GameService {
     private final UserRepository userRepository;
     private final PlayRecordRepository playRecordRepository;
     private final GameResultRepository gameResultRepository;
+    private final GameInstructionRepository gameInstructionRepository;
 
     public GameService(GameRepository gameRepository,
                        UserLikeRepository userLikeRepository,
                        UserRepository userRepository,
-                       PlayRecordRepository playRecordRepository, GameResultRepository gameResultRepository) {
+                       PlayRecordRepository playRecordRepository, GameResultRepository gameResultRepository, GameInstructionRepository gameInstructionRepository) {
         this.gameRepository = gameRepository;
         this.userLikeRepository = userLikeRepository;
         this.userRepository = userRepository;
         this.playRecordRepository = playRecordRepository;
         this.gameResultRepository = gameResultRepository;
+        this.gameInstructionRepository = gameInstructionRepository;
     }
 
 
@@ -126,5 +129,10 @@ public class GameService {
         User user = userRepository.findByUsername(username).orElseThrow();
         Game game = gameRepository.findByGameName(gameName).orElseThrow();
         return gameResultRepository.getUserGameStats(game, user);
+    }
+
+    public List<GameInstructionDTO> getGameInstructions(String gameName) {
+        Game game = gameRepository.findByGameName(gameName).orElseThrow();
+        return gameInstructionRepository.getInstructionsList(game);
     }
 }
