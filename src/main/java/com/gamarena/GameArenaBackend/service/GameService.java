@@ -4,7 +4,6 @@ package com.gamarena.GameArenaBackend.service;
 import com.gamarena.GameArenaBackend.controller.request.GameResultRequest;
 import com.gamarena.GameArenaBackend.entity.*;
 import com.gamarena.GameArenaBackend.entity.dto.GameDTO;
-import com.gamarena.GameArenaBackend.entity.dto.GameInstructionDTO;
 import com.gamarena.GameArenaBackend.entity.dto.GameStatsBoardDTO;
 import com.gamarena.GameArenaBackend.entity.dto.UserGameStatsDTO;
 import com.gamarena.GameArenaBackend.entity.enums.GameResultEnum;
@@ -131,7 +130,7 @@ public class GameService {
         return gameResultRepository.getUserGameStats(game, user);
     }
 
-    public List<GameInstructionDTO> getGameInstructions(String gameName) {
+    public List<String> getGameInstructions(String gameName) {
         Game game = gameRepository.findByGameName(gameName).orElseThrow();
         return gameInstructionRepository.getInstructionsList(game);
     }

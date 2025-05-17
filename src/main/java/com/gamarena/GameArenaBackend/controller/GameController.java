@@ -2,7 +2,6 @@ package com.gamarena.GameArenaBackend.controller;
 
 import com.gamarena.GameArenaBackend.controller.request.GameResultRequest;
 import com.gamarena.GameArenaBackend.entity.dto.GameDTO;
-import com.gamarena.GameArenaBackend.entity.dto.GameInstructionDTO;
 import com.gamarena.GameArenaBackend.entity.dto.GameStatsBoardDTO;
 import com.gamarena.GameArenaBackend.entity.dto.UserGameStatsDTO;
 import com.gamarena.GameArenaBackend.service.GameService;
@@ -61,7 +60,7 @@ public class GameController {
     }
 
     @GetMapping("/instructions")
-    public ResponseEntity<List<GameInstructionDTO>> getGameInstructions(@RequestParam String gameName){
+    public ResponseEntity<List<String>> getGameInstructions(@RequestParam String gameName){
         return ResponseEntity.ok(gameService.getGameInstructions(gameName));
     }
 }
